@@ -1,114 +1,90 @@
+import json
 import re
 
 from core.llm import ask_llm
 from core.memory import remember, search
 from core.memory_ai import extract_memory
+from core.planner import planner
+from core.commands import execute
 
 MAX_HISTORY = 20
-
 history = []
 
 
-def retrieve_relevant_memory(prompt: str) -> str:
-    """
-    Retrieve only the memories related to the user's question.
-    """
+def retrieve_relevant_memory(prompt: str):
 
-    words = re.findall(r"[a-zA-Z0-9_]+", prompt.lower())
+    words = re.findall(r"\w+", prompt.lower())
 
-    seen = set()
     results = []
+    seen = set()
 
     for word in words:
 
         if len(word) < 3:
             continue
 
-        for item in search(word):
+        for match in search(word):
 
-            key = (item["path"], str(item["value"]))
+            key = (match["path"], str(match["value"]))
 
             if key not in seen:
                 seen.add(key)
-                results.append(item)
+                results.append(match)
 
     if not results:
-        return ""
+        return "No relevant memories."
 
-    text = []
-
-    for item in results:
-        text.append(f"{item['path']}: {item['value']}")
-
-    return "\n".join(text)
-
-
-def ask(prompt: str) -> str:
-
-    # Save any new memories
-    new_memory = extract_memory(prompt)
-
-    if new_memory:
-        remember(new_memory)
-
-    # Retrieve relevant memories
-    relevant = retrieve_relevant_memory(prompt)
-
-    if relevant:
-
-        system_prompt = f"""
-You are Jarvis.
-
-These are facts stored in long-term memory.
-
-{relevant}
-
-Use these facts when answering.
-If the answer is present here, NEVER say you don't know.
-"""
-
-    else:
-
-        system_prompt = """
-You are Jarvis.
-Answer normally.
-"""
-
-    messages = [
-        {
-            "role": "system",
-            "content": system_prompt,
-        }
-    ]
-
-    messages.extend(history)
-
-    messages.append(
-        {
-            "role": "user",
-            "content": prompt,
-        }
+    return "\n".join(
+        f"{m['path']} = {m['value']}"
+        for m in results
     )
 
-    print("\n======================")
-    print("SYSTEM PROMPT")
-    print("======================")
-    print(system_prompt)
-    print("======================\n")
 
-    reply = ask_llm(messages)
+def ask(prompt: str):
+
+    # -----------------------------
+    # Decide what this request is
+    # -----------------------------
+
+    plan = planner.create_plan(prompt)
+
+    # -----------------------------
+    # Execute command
+    # -----------------------------
+
+    result = execute(plan)
+
+    if result is not None:
+        return result
+
+    # -----------------------------
+    # Store memories
+    # -----------------------------
+
+    remember(extract_memory(prompt))
+
+    # -----------------------------
+    # Retrieve relevant memories
+    # -----------------------------
+
+    memory_text = retrieve_relevant_memory(prompt)
 
     history.append(
         {
             "role": "user",
-            "content": prompt,
+            "content":
+                f"Relevant memories:\n\n"
+                f"{memory_text}\n\n"
+                f"User: {prompt}"
         }
     )
+
+    reply = ask_llm(history)
 
     history.append(
         {
             "role": "assistant",
-            "content": reply,
+            "content": reply
         }
     )
 

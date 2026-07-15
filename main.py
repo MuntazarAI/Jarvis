@@ -3,6 +3,9 @@ from core.config import USERNAME, ASSISTANT_NAME
 from core.chat import ask
 from core.speech import speak
 
+from core.planner import planner
+from core.commands import execute
+
 
 def startup():
     print("=" * 45)
@@ -26,26 +29,61 @@ def startup():
 
 
 def main():
+
     startup()
 
     while True:
+
         try:
+
             prompt = input(f"{USERNAME}: ").strip()
 
             if not prompt:
                 continue
 
-            if prompt.lower() in ["exit", "quit"]:
+            if prompt.lower() in ("exit", "quit"):
+
                 goodbye = "Goodbye."
 
-                print(f"\n{ASSISTANT_NAME}: {goodbye}")
+                print(f"\n{ASSISTANT_NAME}:")
+                print(goodbye)
 
                 try:
                     speak(goodbye)
                 except Exception as e:
-                    error(f"Speech error: {e}")
+                    error(e)
 
                 break
+
+            # ------------------------
+            # Planner
+            # ------------------------
+
+            plan = planner.create_plan(prompt)
+
+            # ------------------------
+            # Execute commands
+            # ------------------------
+
+            result = execute(plan)
+
+            if result is not None:
+
+                print()
+                print(f"{ASSISTANT_NAME}:")
+                print(result)
+                print()
+
+                try:
+                    speak(result)
+                except Exception as e:
+                    error(e)
+
+                continue
+
+            # ------------------------
+            # Chat with Ollama
+            # ------------------------
 
             reply = ask(prompt)
 
@@ -57,7 +95,7 @@ def main():
             try:
                 speak(reply)
             except Exception as e:
-                error(f"Speech error: {e}")
+                error(e)
 
         except KeyboardInterrupt:
             print("\nExiting...")
