@@ -1,155 +1,209 @@
 import json
 import shutil
+import re
 from pathlib import Path
 
 DATA_DIR = Path("data")
 MEMORY_FILE = DATA_DIR / "memory.json"
 BACKUP_FILE = DATA_DIR / "memory_backup.json"
+class Memory:
 
+    def __init__(self):
+        DATA_DIR.mkdir(exist_ok=True)
 
-def default_memory():
-    return {
-        "profile": {},
-        "preferences": {},
-        "pets": {},
-        "projects": [],
-        "goals": [],
-        "notes": [],
-        "reminders": []
-    }
+    # ----------------------------
+    # Default Memory
+    # ----------------------------
 
+    def default(self):
+        return {
+            "profile": {},
+            "preferences": {},
+            "pets": {},
+            "projects": [],
+            "goals": [],
+            "notes": [],
+            "reminders": []
+        }
 
-def load_memory():
-    DATA_DIR.mkdir(exist_ok=True)
+    # ----------------------------
+    # Load
+    # ----------------------------
 
-    if not MEMORY_FILE.exists():
-        memory = default_memory()
-        save_memory(memory)
-        return memory
+    def load(self):
 
-    try:
-        with open(MEMORY_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        if not MEMORY_FILE.exists():
+            data = self.default()
+            self.save(data)
+            return data
 
-    except Exception:
-        memory = default_memory()
-        save_memory(memory)
-        return memory
+        try:
+            with open(MEMORY_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
 
+        except Exception:
+            data = self.default()
+            self.save(data)
+            return data
 
-def save_memory(memory):
-    DATA_DIR.mkdir(exist_ok=True)
+    # ----------------------------
+    # Save
+    # ----------------------------
 
-    if MEMORY_FILE.exists():
-        shutil.copy(MEMORY_FILE, BACKUP_FILE)
+    def save(self, data):
 
-    with open(MEMORY_FILE, "w", encoding="utf-8") as f:
-        json.dump(memory, f, indent=4, ensure_ascii=False)
+        if MEMORY_FILE.exists():
+            shutil.copy(MEMORY_FILE, BACKUP_FILE)
 
+        with open(MEMORY_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
 
-def merge_memory(old, new):
-    if not isinstance(new, dict):
+    # ----------------------------
+    # Merge
+    # ----------------------------
+
+    def merge(self, old, new):
+
+        if not isinstance(new, dict):
+            return old
+
+        for key, value in new.items():
+
+            if key not in old:
+                old[key] = value
+                continue
+
+            if isinstance(value, dict):
+
+                if not isinstance(old[key], dict):
+                    old[key] = {}
+
+                for k, v in value.items():
+                    if v not in ("", None):
+                        old[key][k] = v
+
+            elif isinstance(value, list):
+
+                if not isinstance(old[key], list):
+                    old[key] = []
+
+                for item in value:
+                    if item not in old[key]:
+                        old[key].append(item)
+
+            else:
+
+                if value not in ("", None):
+                    old[key] = value
+
         return old
 
-    for key, value in new.items():
+    # ----------------------------
+    # Remember
+    # ----------------------------
 
-        if key not in old:
-            old[key] = value
-            continue
+    def remember(self, new_memory):
 
-        if isinstance(value, dict):
+        if not new_memory:
+            return
 
-            if not isinstance(old[key], dict):
-                old[key] = {}
+        data = self.load()
+        data = self.merge(data, new_memory)
+        self.save(data)
 
-            for k, v in value.items():
-                if v not in ("", None):
-                    old[key][k] = v
+    # ----------------------------
+    # Recall
+    # ----------------------------
 
-        elif isinstance(value, list):
+    def recall(self):
+        return self.load()
 
-            if not isinstance(old[key], list):
-                old[key] = []
+    # ----------------------------
+    # Forget
+    # ----------------------------
 
-            for item in value:
-                if item not in old[key]:
-                    old[key].append(item)
+    def forget(self, category, key):
 
-        else:
+        data = self.load()
 
-            if value not in ("", None):
-                old[key] = value
+        if category in data and isinstance(data[category], dict):
+            data[category].pop(key, None)
 
-    return old
+        self.save(data)
 
+    # ----------------------------
+    # Search (Whole Word Search)
+    # ----------------------------
+    def search(self, keyword):
+        import re
 
-def remember(new_memory):
-    if not new_memory:
-        return
+        keyword = keyword.lower().strip()
 
-    memory = load_memory()
-    memory = merge_memory(memory, new_memory)
-    save_memory(memory)
+        data = self.load()
 
+        results = []
 
-def recall():
-    return load_memory()
+        def tokenize(text):
+            """
+            Split text into searchable words.
 
+            favorite_editor
+                -> favorite editor
 
-def forget(category, key):
-    memory = load_memory()
+            profile.favorite_editor
+                -> profile favorite editor
 
-    if category in memory and isinstance(memory[category], dict):
-        memory[category].pop(key, None)
+            VS Code
+                -> vs code
+            """
 
-    save_memory(memory)
+            text = str(text).lower()
 
+            text = text.replace("_", " ")
+            text = text.replace(".", " ")
+            text = text.replace("-", " ")
 
-def search(keyword):
-    """
-    Search both memory keys and memory values.
-    """
+            return re.findall(r"[a-z0-9]+", text)
 
-    keyword = keyword.lower().strip()
+        def walk(obj, path=""):
 
-    memory = load_memory()
-    results = []
+            if isinstance(obj, dict):
 
-    def walk(obj, path=""):
+                for k, v in obj.items():
 
-        if isinstance(obj, dict):
+                    new_path = f"{path}.{k}" if path else k
 
-            for key, value in obj.items():
+                    if keyword in tokenize(new_path):
+                        results.append({
+                            "path": new_path,
+                            "value": v
+                        })
 
-                new_path = f"{path}.{key}" if path else key
+                    walk(v, new_path)
 
-                # Search the key/path
-                if keyword in new_path.lower():
+            elif isinstance(obj, list):
+
+                for i, item in enumerate(obj):
+                    walk(item, f"{path}[{i}]")
+
+            else:
+
+                if keyword in tokenize(obj):
                     results.append({
-                        "path": new_path,
-                        "value": value
+                        "path": path,
+                        "value": obj
                     })
 
-                # Continue searching inside the value
-                walk(value, new_path)
+        walk(data)
 
-        elif isinstance(obj, list):
+        return results
 
-            for i, item in enumerate(obj):
-                walk(item, f"{path}[{i}]")
+    # ----------------------------
+    # Reset
+    # ----------------------------
 
-        else:
+    def reset(self):
+        self.save(self.default())
 
-            # Search the value
-            if keyword in str(obj).lower():
-                results.append({
-                    "path": path,
-                    "value": obj
-                })
 
-    walk(memory)
-
-    return results
-
-def reset_memory():
-    save_memory(default_memory())
+memory = Memory()

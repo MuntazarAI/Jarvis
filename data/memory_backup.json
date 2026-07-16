@@ -1,11 +1,12 @@
 {
     "profile": {
         "name": "Muntazar",
-        "favorite_color": "Black",
-        "dog_name": "Max",
+        "favorite_color": "Blue",
+        "dog_name": "Rocky",
         "age": 17,
         "location": "India",
-        "occupation": "Student"
+        "occupation": "Student",
+        "favorite_language": "Rust"
     },
     "preferences": {
         "favorite_food": "Pizza",
@@ -17,18 +18,26 @@
         {
             "name": "Jarvis",
             "status": "In Development"
+        },
+        {
+            "name": "Learning Python",
+            "status": "In Progress"
         }
     ],
     "goals": [
         "Build a real JARVIS AI",
         "Learn AI engineering",
-        "Create my own operating system"
+        "Create my own operating system",
+        "Learn Python"
     ],
     "notes": [
-        "Learning Python"
+        "Learning Python",
+        "Python is a high-level, interpreted programming language.",
+        "I am learning decorators."
     ],
     "reminders": [],
     "location": "India",
     "occupation": "Student",
-    "joke": "Why don't scientists trust atoms? Because they make up everything."
+    "joke": "Why don't scientists trust atoms? Because they make up everything.",
+    "date": "2024-01-26T14:37:24.913Z"
 }

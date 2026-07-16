@@ -1,0 +1,863 @@
+[
+    {
+        "name": "hello.py",
+        "path": "AgentTest/hello.py",
+        "size": 20,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "__init__.py",
+        "path": "brain/__init__.py",
+        "size": 0,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "agent.py",
+        "path": "brain/agent.py",
+        "size": 1697,
+        "classes": [
+            "Agent"
+        ],
+        "functions": [
+            "run"
+        ],
+        "imports": [
+            "brain.brain",
+            "brain.multiexecutor",
+            "brain.reflection",
+            "brain.formatter",
+            "brain.validator",
+            "brain.router"
+        ]
+    },
+    {
+        "name": "brain.py",
+        "path": "brain/brain.py",
+        "size": 752,
+        "classes": [
+            "Brain"
+        ],
+        "functions": [
+            "think"
+        ],
+        "imports": [
+            "ollama",
+            "brain.multiplanner",
+            "brain.system_prompt",
+            "core.config"
+        ]
+    },
+    {
+        "name": "executor.py",
+        "path": "brain/executor.py",
+        "size": 785,
+        "classes": [
+            "Executor"
+        ],
+        "functions": [
+            "execute"
+        ],
+        "imports": [
+            "json",
+            "tools",
+            "tools.registry"
+        ]
+    },
+    {
+        "name": "formatter.py",
+        "path": "brain/formatter.py",
+        "size": 636,
+        "classes": [],
+        "functions": [
+            "format_tool_result"
+        ],
+        "imports": []
+    },
+    {
+        "name": "multiexecutor.py",
+        "path": "brain/multiexecutor.py",
+        "size": 1482,
+        "classes": [
+            "MultiExecutor"
+        ],
+        "functions": [
+            "execute"
+        ],
+        "imports": [
+            "tools.registry"
+        ]
+    },
+    {
+        "name": "multiplanner.py",
+        "path": "brain/multiplanner.py",
+        "size": 846,
+        "classes": [
+            "MultiPlanner"
+        ],
+        "functions": [
+            "plan"
+        ],
+        "imports": [
+            "json"
+        ]
+    },
+    {
+        "name": "planner.py",
+        "path": "brain/planner.py",
+        "size": 752,
+        "classes": [
+            "Planner"
+        ],
+        "functions": [
+            "plan"
+        ],
+        "imports": [
+            "json"
+        ]
+    },
+    {
+        "name": "project_memory.py",
+        "path": "brain/project_memory.py",
+        "size": 2042,
+        "classes": [
+            "ProjectMemory"
+        ],
+        "functions": [
+            "__init__",
+            "scan",
+            "_analyze",
+            "build_index"
+        ],
+        "imports": [
+            "ast",
+            "json",
+            "pathlib"
+        ]
+    },
+    {
+        "name": "reflection.py",
+        "path": "brain/reflection.py",
+        "size": 1104,
+        "classes": [
+            "Reflection"
+        ],
+        "functions": [
+            "reply"
+        ],
+        "imports": [
+            "json",
+            "ollama",
+            "core.config"
+        ]
+    },
+    {
+        "name": "router.py",
+        "path": "brain/router.py",
+        "size": 2486,
+        "classes": [
+            "Router"
+        ],
+        "functions": [
+            "route"
+        ],
+        "imports": [
+            "re"
+        ]
+    },
+    {
+        "name": "system_prompt.py",
+        "path": "brain/system_prompt.py",
+        "size": 2061,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "validator.py",
+        "path": "brain/validator.py",
+        "size": 2558,
+        "classes": [
+            "Validator"
+        ],
+        "functions": [
+            "validate"
+        ],
+        "imports": []
+    },
+    {
+        "name": "__init__.py",
+        "path": "core/__init__.py",
+        "size": 0,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "agent.py",
+        "path": "core/agent.py",
+        "size": 460,
+        "classes": [
+            "Agent"
+        ],
+        "functions": [
+            "handle"
+        ],
+        "imports": [
+            "core.planner",
+            "core.chat",
+            "core.skills"
+        ]
+    },
+    {
+        "name": "assistant.py",
+        "path": "core/assistant.py",
+        "size": 0,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "browser.py",
+        "path": "core/browser.py",
+        "size": 715,
+        "classes": [],
+        "functions": [
+            "google_search"
+        ],
+        "imports": [
+            "subprocess",
+            "urllib.parse"
+        ]
+    },
+    {
+        "name": "chat.py",
+        "path": "core/chat.py",
+        "size": 1859,
+        "classes": [],
+        "functions": [
+            "retrieve_relevant_memory",
+            "ask"
+        ],
+        "imports": [
+            "json",
+            "re",
+            "core.llm",
+            "core.memory",
+            "core.memory_ai",
+            "core.planner",
+            "core.commands"
+        ]
+    },
+    {
+        "name": "commands.py",
+        "path": "core/commands.py",
+        "size": 1293,
+        "classes": [],
+        "functions": [
+            "execute"
+        ],
+        "imports": [
+            "core.tools"
+        ]
+    },
+    {
+        "name": "config.py",
+        "path": "core/config.py",
+        "size": 268,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "os",
+            "dotenv"
+        ]
+    },
+    {
+        "name": "listen.py",
+        "path": "core/listen.py",
+        "size": 0,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "llm.py",
+        "path": "core/llm.py",
+        "size": 945,
+        "classes": [],
+        "functions": [
+            "ask_llm"
+        ],
+        "imports": [
+            "ollama",
+            "core.config"
+        ]
+    },
+    {
+        "name": "logger.py",
+        "path": "core/logger.py",
+        "size": 281,
+        "classes": [],
+        "functions": [
+            "info",
+            "success",
+            "error"
+        ],
+        "imports": [
+            "rich.console"
+        ]
+    },
+    {
+        "name": "memory.py",
+        "path": "core/memory.py",
+        "size": 4693,
+        "classes": [
+            "Memory"
+        ],
+        "functions": [
+            "__init__",
+            "default",
+            "load",
+            "save",
+            "merge",
+            "remember",
+            "recall",
+            "forget",
+            "search",
+            "reset",
+            "tokenize",
+            "walk"
+        ],
+        "imports": [
+            "json",
+            "shutil",
+            "re",
+            "pathlib",
+            "re"
+        ]
+    },
+    {
+        "name": "memory_ai.py",
+        "path": "core/memory_ai.py",
+        "size": 1203,
+        "classes": [],
+        "functions": [
+            "extract_memory"
+        ],
+        "imports": [
+            "json",
+            "ollama",
+            "core.config"
+        ]
+    },
+    {
+        "name": "planner.py",
+        "path": "core/planner.py",
+        "size": 2542,
+        "classes": [
+            "Plan",
+            "Planner"
+        ],
+        "functions": [
+            "__init__",
+            "create_plan"
+        ],
+        "imports": [
+            "dataclasses",
+            "re"
+        ]
+    },
+    {
+        "name": "plugin_manager.py",
+        "path": "core/plugin_manager.py",
+        "size": 852,
+        "classes": [
+            "PluginManager"
+        ],
+        "functions": [
+            "__init__",
+            "load_plugins",
+            "register",
+            "execute",
+            "list_plugins"
+        ],
+        "imports": [
+            "os",
+            "importlib"
+        ]
+    },
+    {
+        "name": "skills.py",
+        "path": "core/skills.py",
+        "size": 644,
+        "classes": [
+            "SkillManager"
+        ],
+        "functions": [
+            "__init__",
+            "register",
+            "execute",
+            "list_skills"
+        ],
+        "imports": [
+            "core.browser",
+            "core.system"
+        ]
+    },
+    {
+        "name": "speech.py",
+        "path": "core/speech.py",
+        "size": 558,
+        "classes": [],
+        "functions": [
+            "speak"
+        ],
+        "imports": [
+            "subprocess",
+            "pathlib"
+        ]
+    },
+    {
+        "name": "system.py",
+        "path": "core/system.py",
+        "size": 660,
+        "classes": [],
+        "functions": [
+            "open_application"
+        ],
+        "imports": [
+            "subprocess"
+        ]
+    },
+    {
+        "name": "tools.py",
+        "path": "core/tools.py",
+        "size": 586,
+        "classes": [
+            "ToolManager"
+        ],
+        "functions": [
+            "__init__",
+            "has_tool",
+            "execute"
+        ],
+        "imports": [
+            "core.system",
+            "core.browser"
+        ]
+    },
+    {
+        "name": "utils.py",
+        "path": "core/utils.py",
+        "size": 0,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "voice.py",
+        "path": "core/voice.py",
+        "size": 1188,
+        "classes": [
+            "VoiceRecognizer"
+        ],
+        "functions": [
+            "suppress_stderr",
+            "__init__",
+            "listen"
+        ],
+        "imports": [
+            "os",
+            "sys",
+            "speech_recognition",
+            "contextlib"
+        ]
+    },
+    {
+        "name": "jarvis.py",
+        "path": "jarvis.py",
+        "size": 605,
+        "classes": [],
+        "functions": [
+            "main"
+        ],
+        "imports": [
+            "brain.agent",
+            "tools"
+        ]
+    },
+    {
+        "name": "main.py",
+        "path": "main.py",
+        "size": 1905,
+        "classes": [],
+        "functions": [
+            "startup",
+            "get_input",
+            "main"
+        ],
+        "imports": [
+            "core.logger",
+            "core.config",
+            "core.agent",
+            "core.speech",
+            "core.voice",
+            "core.planner",
+            "core.commands"
+        ]
+    },
+    {
+        "name": "__init__.py",
+        "path": "plugins/__init__.py",
+        "size": 0,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "browser.py",
+        "path": "plugins/browser.py",
+        "size": 158,
+        "classes": [],
+        "functions": [
+            "search",
+            "register"
+        ],
+        "imports": [
+            "core.browser"
+        ]
+    },
+    {
+        "name": "system.py",
+        "path": "plugins/system.py",
+        "size": 158,
+        "classes": [],
+        "functions": [
+            "run",
+            "register"
+        ],
+        "imports": [
+            "core.system"
+        ]
+    },
+    {
+        "name": "test.py",
+        "path": "test.py",
+        "size": 67,
+        "classes": [],
+        "functions": [
+            "add"
+        ],
+        "imports": []
+    },
+    {
+        "name": "test_brain.py",
+        "path": "test_brain.py",
+        "size": 497,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "brain.planner",
+            "brain.executor",
+            "tools.registry",
+            "tools.memory_tool"
+        ]
+    },
+    {
+        "name": "test_brain_ai.py",
+        "path": "test_brain_ai.py",
+        "size": 587,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "brain.brain",
+            "brain.executor",
+            "brain.reflection",
+            "brain.formatter",
+            "brain.validator"
+        ]
+    },
+    {
+        "name": "test_browser.py",
+        "path": "test_browser.py",
+        "size": 225,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "tools.browser_tool"
+        ]
+    },
+    {
+        "name": "test_filesystem.py",
+        "path": "test_filesystem.py",
+        "size": 399,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "tools.filesystem"
+        ]
+    },
+    {
+        "name": "test_multiexecutor.py",
+        "path": "test_multiexecutor.py",
+        "size": 682,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "brain.multiexecutor"
+        ]
+    },
+    {
+        "name": "test_project_memory.py",
+        "path": "test_project_memory.py",
+        "size": 101,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "brain.project_memory"
+        ]
+    },
+    {
+        "name": "test_python_tool.py",
+        "path": "test_python_tool.py",
+        "size": 235,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "tools.python_tool"
+        ]
+    },
+    {
+        "name": "test_reflection.py",
+        "path": "test_reflection.py",
+        "size": 228,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "brain.reflection"
+        ]
+    },
+    {
+        "name": "test_registry.py",
+        "path": "test_registry.py",
+        "size": 376,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "tools.registry",
+            "tools.memory_tool"
+        ]
+    },
+    {
+        "name": "test_terminal.py",
+        "path": "test_terminal.py",
+        "size": 129,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "tools"
+        ]
+    },
+    {
+        "name": "test_tools.py",
+        "path": "test_tools.py",
+        "size": 423,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "tools.manager",
+            "tools.memory_tool"
+        ]
+    },
+    {
+        "name": "test_tts.py",
+        "path": "test_tts.py",
+        "size": 0,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "__init__.py",
+        "path": "tools/__init__.py",
+        "size": 337,
+        "classes": [],
+        "functions": [],
+        "imports": [
+            "tools.registry",
+            "tools.memory_tool",
+            "tools.terminal",
+            "tools.filesystem",
+            "tools.python_tool"
+        ]
+    },
+    {
+        "name": "base.py",
+        "path": "tools/base.py",
+        "size": 603,
+        "classes": [
+            "Tool"
+        ],
+        "functions": [
+            "run",
+            "execute",
+            "schema"
+        ],
+        "imports": [
+            "abc"
+        ]
+    },
+    {
+        "name": "browser.py",
+        "path": "tools/browser.py",
+        "size": 0,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "browser_tool.py",
+        "path": "tools/browser_tool.py",
+        "size": 1483,
+        "classes": [
+            "BrowserTool"
+        ],
+        "functions": [
+            "run"
+        ],
+        "imports": [
+            "webbrowser",
+            "duckduckgo_search",
+            "tools.base"
+        ]
+    },
+    {
+        "name": "files.py",
+        "path": "tools/files.py",
+        "size": 0,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "filesystem.py",
+        "path": "tools/filesystem.py",
+        "size": 3489,
+        "classes": [
+            "FileSystemTool"
+        ],
+        "functions": [
+            "run"
+        ],
+        "imports": [
+            "pathlib",
+            "shutil",
+            "tools.base"
+        ]
+    },
+    {
+        "name": "manager.py",
+        "path": "tools/manager.py",
+        "size": 447,
+        "classes": [
+            "ToolManager"
+        ],
+        "functions": [
+            "__init__",
+            "register",
+            "get",
+            "list_tools",
+            "run"
+        ],
+        "imports": []
+    },
+    {
+        "name": "memory_tool.py",
+        "path": "tools/memory_tool.py",
+        "size": 1468,
+        "classes": [
+            "MemoryTool"
+        ],
+        "functions": [
+            "run"
+        ],
+        "imports": [
+            "tools.base",
+            "core.memory"
+        ]
+    },
+    {
+        "name": "python_tool.py",
+        "path": "tools/python_tool.py",
+        "size": 1909,
+        "classes": [
+            "PythonTool"
+        ],
+        "functions": [
+            "run"
+        ],
+        "imports": [
+            "subprocess",
+            "tempfile",
+            "pathlib",
+            "tools.base"
+        ]
+    },
+    {
+        "name": "registry.py",
+        "path": "tools/registry.py",
+        "size": 402,
+        "classes": [
+            "ToolRegistry"
+        ],
+        "functions": [
+            "__init__",
+            "register",
+            "get",
+            "list",
+            "schemas"
+        ],
+        "imports": []
+    },
+    {
+        "name": "system.py",
+        "path": "tools/system.py",
+        "size": 0,
+        "classes": [],
+        "functions": [],
+        "imports": []
+    },
+    {
+        "name": "terminal.py",
+        "path": "tools/terminal.py",
+        "size": 722,
+        "classes": [
+            "TerminalTool"
+        ],
+        "functions": [
+            "run"
+        ],
+        "imports": [
+            "subprocess",
+            "tools.base"
+        ]
+    },
+    {
+        "name": "terminal_tool.py",
+        "path": "tools/terminal_tool.py",
+        "size": 238,
+        "classes": [
+            "TerminalTool"
+        ],
+        "functions": [
+            "run"
+        ],
+        "imports": [
+            "tools.base",
+            "tools.terminal"
+        ]
+    }
+]

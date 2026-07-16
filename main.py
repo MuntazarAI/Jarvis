@@ -1,7 +1,8 @@
 from core.logger import info, success, error
 from core.config import USERNAME, ASSISTANT_NAME
-from core.chat import ask
+from core.agent import agent
 from core.speech import speak
+from core.voice import voice
 
 from core.planner import planner
 from core.commands import execute
@@ -25,7 +26,20 @@ def startup():
     try:
         speak(greeting)
     except Exception as e:
-        error(f"Speech error: {e}")
+        error(e)
+
+
+def get_input():
+    """
+    Lets the user choose between typing or speaking.
+    """
+
+    mode = input("\n(T)ype or (V)oice? ").strip().lower()
+
+    if mode == "v":
+        return voice.listen()
+
+    return input(f"{USERNAME}: ").strip()
 
 
 def main():
@@ -36,7 +50,7 @@ def main():
 
         try:
 
-            prompt = input(f"{USERNAME}: ").strip()
+            prompt = get_input()
 
             if not prompt:
                 continue
@@ -48,22 +62,10 @@ def main():
                 print(f"\n{ASSISTANT_NAME}:")
                 print(goodbye)
 
-                try:
-                    speak(goodbye)
-                except Exception as e:
-                    error(e)
-
+                speak(goodbye)
                 break
 
-            # ------------------------
-            # Planner
-            # ------------------------
-
             plan = planner.create_plan(prompt)
-
-            # ------------------------
-            # Execute commands
-            # ------------------------
 
             result = execute(plan)
 
@@ -74,28 +76,17 @@ def main():
                 print(result)
                 print()
 
-                try:
-                    speak(result)
-                except Exception as e:
-                    error(e)
-
+                speak(result)
                 continue
 
-            # ------------------------
-            # Chat with Ollama
-            # ------------------------
-
-            reply = ask(prompt)
+            reply = agent.handle(prompt)
 
             print()
             print(f"{ASSISTANT_NAME}:")
             print(reply)
             print()
 
-            try:
-                speak(reply)
-            except Exception as e:
-                error(e)
+            speak(reply)
 
         except KeyboardInterrupt:
             print("\nExiting...")

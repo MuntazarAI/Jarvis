@@ -2,31 +2,22 @@
 commands.py
 
 Executes commands chosen by the planner.
-
-Returns:
-    None -> continue to the LLM
-    str  -> command already handled
 """
 
-from core.browser import google_search
-from core.system import open_application
+from core.tools import tool_manager
 
 
 def execute(plan):
     """
-    Execute a planner action.
+    Executes planner actions.
 
-    Parameters
-    ----------
-    plan : Plan
-
-    Returns
-    -------
-    str | None
+    Returns:
+        None if the request should continue to the LLM.
+        A string if the command has already been handled.
     """
 
     # --------------------------
-    # MEMORY
+    # Memory
     # --------------------------
 
     if plan.intent == "memory":
@@ -43,21 +34,29 @@ def execute(plan):
             )
 
     # --------------------------
-    # SYSTEM
+    # System Tool
     # --------------------------
 
     if plan.intent == "system":
-        return open_application(plan.target)
+
+        return tool_manager.execute(
+            "system",
+            plan.target,
+        )
 
     # --------------------------
-    # BROWSER
+    # Browser Tool
     # --------------------------
 
     if plan.intent == "browser":
-        return google_search(plan.target)
+
+        return tool_manager.execute(
+            "browser",
+            plan.target,
+        )
 
     # --------------------------
-    # CHAT
+    # Chat
     # --------------------------
 
     return None
