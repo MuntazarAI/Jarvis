@@ -4,8 +4,8 @@ from tools.code_reader import code_reader
 from tools.code_analyzer import code_analyzer
 from tools.error_analyzer import error_analyzer
 
-from brain.ai_debugger import ai_debugger
-from brain.patch_generator import patch_generator
+from intelligence.ai_debugger import ai_debugger
+from intelligence.patch_generator import patch_generator
 
 traceback_text = """
 Traceback (most recent call last):

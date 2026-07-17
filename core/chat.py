@@ -2,8 +2,8 @@ import json
 import re
 
 from core.llm import ask_llm
-from core.memory import remember, search
-from core.memory_ai import extract_memory
+from knowledge.memory import remember, search
+from knowledge.memory_ai import extract_memory
 from core.planner import planner
 from core.commands import execute
 

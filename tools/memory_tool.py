@@ -1,5 +1,5 @@
 from tools.base import Tool
-from core.memory import memory
+from knowledge.memory import memory
 
 
 class MemoryTool(Tool):

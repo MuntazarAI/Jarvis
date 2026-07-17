@@ -1,5 +1,5 @@
 from brain.planner import Planner
-from brain.executor import Executor
+from execution.executor import Executor
 
 from tools.registry import ToolRegistry
 from tools.memory_tool import MemoryTool

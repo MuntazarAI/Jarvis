@@ -1,4 +1,4 @@
-from brain.multiexecutor import multiexecutor
+from execution.multiexecutor import multiexecutor
 
 plan = {
     "steps": [

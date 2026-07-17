@@ -1,6 +1,6 @@
 from brain.brain import Brain
-from brain.executor import executor
-from brain.reflection import reflection
+from execution.executor import executor
+from intelligence.reflection import reflection
 from brain.formatter import format_tool_result
 from brain.validator import validator
 

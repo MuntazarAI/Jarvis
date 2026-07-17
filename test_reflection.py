@@ -1,4 +1,4 @@
-from brain.reflection import reflection
+from intelligence.reflection import reflection
 
 tool_result = {
     "success": True,
