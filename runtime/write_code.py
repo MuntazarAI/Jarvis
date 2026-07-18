@@ -1,10 +1,9 @@
 from pathlib import Path
 
 
-class CodeWriter:
+class WriteCode:
     """
-    Writes source code to files.
-    Creates parent directories if needed.
+    Runtime tool for writing source code.
     """
 
     def write(self, path, content):
@@ -15,7 +14,7 @@ class CodeWriter:
 
             file.parent.mkdir(
                 parents=True,
-                exist_ok=True
+                exist_ok=True,
             )
 
             old_content = ""
@@ -24,12 +23,12 @@ class CodeWriter:
 
                 old_content = file.read_text(
                     encoding="utf-8",
-                    errors="ignore"
+                    errors="ignore",
                 )
 
             file.write_text(
                 content,
-                encoding="utf-8"
+                encoding="utf-8",
             )
 
             return {
@@ -37,15 +36,15 @@ class CodeWriter:
                 "path": str(file),
                 "bytes_written": len(content.encode("utf-8")),
                 "lines": len(content.splitlines()),
-                "changed": old_content != content
+                "changed": old_content != content,
             }
 
         except Exception as e:
 
             return {
                 "success": False,
-                "error": str(e)
+                "error": str(e),
             }
 
 
-code_writer = CodeWriter()
+write_code = WriteCode()

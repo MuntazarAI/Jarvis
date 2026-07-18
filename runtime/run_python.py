@@ -6,7 +6,17 @@ from pathlib import Path
 
 class PythonRunner:
     """
-    Executes Python files and captures the result.
+    Executes a Python file inside the project root.
+
+    Returns a dictionary:
+
+    {
+        "success": bool,
+        "returncode": int,
+        "stdout": str,
+        "stderr": str,
+        "execution_time": float
+    }
     """
 
     def run(self, path, timeout=30):
@@ -16,7 +26,10 @@ class PythonRunner:
         if not file.exists():
             return {
                 "success": False,
-                "error": "File not found."
+                "returncode": -1,
+                "stdout": "",
+                "stderr": f"File not found: {file}",
+                "execution_time": 0,
             }
 
         start = time.time()
@@ -24,10 +37,11 @@ class PythonRunner:
         try:
 
             result = subprocess.run(
-                [sys.executable, str(file)],
+                [sys.executable, "-m", file.with_suffix("").as_posix().replace("/", ".")],
+                cwd=Path.cwd(),
                 capture_output=True,
                 text=True,
-                timeout=timeout
+                timeout=timeout,
             )
 
             elapsed = round(time.time() - start, 3)
@@ -37,21 +51,27 @@ class PythonRunner:
                 "returncode": result.returncode,
                 "stdout": result.stdout,
                 "stderr": result.stderr,
-                "execution_time": elapsed
+                "execution_time": elapsed,
             }
 
         except subprocess.TimeoutExpired:
 
             return {
                 "success": False,
-                "error": f"Execution exceeded {timeout} seconds."
+                "returncode": -1,
+                "stdout": "",
+                "stderr": f"Execution exceeded {timeout} seconds.",
+                "execution_time": round(time.time() - start, 3),
             }
 
         except Exception as e:
 
             return {
                 "success": False,
-                "error": str(e)
+                "returncode": -1,
+                "stdout": "",
+                "stderr": str(e),
+                "execution_time": round(time.time() - start, 3),
             }
 
 

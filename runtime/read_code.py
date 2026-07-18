@@ -1,9 +1,9 @@
 from pathlib import Path
 
 
-class CodeReader:
+class ReadCode:
     """
-    Reads source code from files.
+    Runtime tool for reading source code.
     """
 
     def read(self, path):
@@ -13,20 +13,20 @@ class CodeReader:
         if not file.exists():
             return {
                 "success": False,
-                "error": "File not found."
+                "error": "File not found.",
             }
 
         if not file.is_file():
             return {
                 "success": False,
-                "error": "Not a file."
+                "error": "Not a file.",
             }
 
         try:
 
             content = file.read_text(
                 encoding="utf-8",
-                errors="ignore"
+                errors="ignore",
             )
 
             return {
@@ -34,15 +34,15 @@ class CodeReader:
                 "path": str(file),
                 "content": content,
                 "lines": len(content.splitlines()),
-                "characters": len(content)
+                "characters": len(content),
             }
 
         except Exception as e:
 
             return {
                 "success": False,
-                "error": str(e)
+                "error": str(e),
             }
 
 
-code_reader = CodeReader()
+read_code = ReadCode()

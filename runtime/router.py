@@ -1,61 +1,99 @@
+"""
+Runtime tool router.
+
+Every engineering action goes through this router.
+
+All tools return RuntimeResult objects.
+"""
+
+from runtime.result import RuntimeResult
+
 from runtime.project_search import project_search
-from runtime.read_code import code_reader
-from runtime.write_code import code_writer
+from runtime.read_code import read_code
+from runtime.write_code import write_code
 from runtime.run_python import python_runner
+from runtime.run_terminal import terminal_runner
+from runtime.apply_patch import patch_applier
+from runtime.generate_patch import patch_generator
+from runtime.test_runner import test_runner
 
 
 class RuntimeRouter:
-    """
-    Routes engineering actions to the proper runtime tool.
-    """
 
-    def execute(self, step):
+    def __init__(self):
 
-        action = step.get("action")
-        args = step.get("args", {})
+        self.tools = {
+
+            "project_search": project_search.search,
+
+            "read_code": read_code.read,
+
+            "write_code": write_code.write,
+
+            "run_python": python_runner.run,
+
+            "run_terminal": terminal_runner.run,
+
+            "generate_patch": patch_generator.generate,
+
+            "apply_patch": patch_applier.apply,
+
+            "test": test_runner.run,
+
+        }
+
+    def available_tools(self):
+
+        return sorted(self.tools.keys())
+    def execute(self, action, **kwargs):
+
+        tool = self.tools.get(action)
+
+        if tool is None:
+            return RuntimeResult.fail(
+                action,
+                f"Unknown tool: {action}",
+            )
 
         try:
 
-            if action == "project_search":
+            result = tool(**kwargs)
 
-                return project_search.search(
-                    root=args.get("path", "."),
-                    keyword=args.get("keyword"),
-                    pattern=args.get("pattern", "*.py")
+            if isinstance(result, RuntimeResult):
+                return result
+
+            if isinstance(result, dict):
+
+                if result.get("success", False):
+
+                    return RuntimeResult.ok(
+                        action,
+                        data=result,
+                    )
+
+                return RuntimeResult.fail(
+                    action,
+                    result.get(
+                        "error",
+                        result.get(
+                            "stderr",
+                            "Unknown error",
+                        ),
+                    ),
+                    data=result,
                 )
 
-            elif action == "read_code":
-
-                return code_reader.read(
-                    args["path"]
-                )
-
-            elif action == "write_code":
-
-                return code_writer.write(
-                    args["path"],
-                    args["content"]
-                )
-
-            elif action == "run_python":
-
-                return python_runner.run(
-                    args["path"]
-                )
-
-            else:
-
-                return {
-                    "success": False,
-                    "error": f"Unknown runtime action: {action}"
-                }
+            return RuntimeResult.ok(
+                action,
+                data=result,
+            )
 
         except Exception as e:
 
-            return {
-                "success": False,
-                "error": str(e)
-            }
+            return RuntimeResult.fail(
+                action,
+                str(e),
+            )
 
 
 runtime_router = RuntimeRouter()
