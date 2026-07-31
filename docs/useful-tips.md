@@ -9,6 +9,7 @@ Useful tips for working with Jarvis
 - Running specific modules:
   - python main.py
   - python jarvis.py
+- Get built-in assistance by typing: help, commands, or usage
 
 Project layout highlights
 - core/ and brain/ contain the main agent logic
