@@ -1,0 +1,9 @@
+{
+  "log_level": "INFO",
+  "data_dir": "data",
+  "model": "local",
+  "max_workers": 4,
+  "use_gpu": false,
+  "http_port": 8080,
+  "plugins": []
+}
