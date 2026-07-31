@@ -1,21 +1,66 @@
 :root{
   --bg:#04121a;
-  --panel: rgba(0,20,30,0.6);
+  --panel: rgba(0,20,30,0.65);
   --accent: #00e6ff;
-  --glass: rgba(255,255,255,0.03);
+  --accent-soft: rgba(0,230,255,0.15);
+  --glass: rgba(255,255,255,0.06);
+  --text: #d5f7ff;
+  --text-muted: #7ac6d7;
+  --border: rgba(0,255,255,0.18);
 }
-html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial;background:#000}
-.background{position:fixed;inset:0;background-image: url('img/interface.png');background-size:cover;background-position:center;filter:brightness(0.55);}
-.app{position:relative;display:flex;gap:18px;padding:28px;height:100%;box-sizing:border-box}
-.left-panel{width:260px;color:var(--accent);display:flex;flex-direction:column;gap:12px}
-.right-panel{width:300px;color:var(--accent)}
-.main-panel{flex:1;display:flex;align-items:center;justify-content:center}
-.panel{background:var(--panel);border:1px solid rgba(0,255,255,0.06);padding:12px;border-radius:8px}
-.logo{font-weight:700;font-size:18px;margin-bottom:8px}
-.console{width:100%;max-width:900px;height:70vh;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.5));backdrop-filter:blur(6px);border-radius:10px;padding:16px;display:flex;flex-direction:column}
-.messages{flex:1;overflow:auto;color:#cdefff;padding:8px}
-.input-row{display:flex;gap:8px;margin-top:8px}
-.input-row input{flex:1;padding:10px;border-radius:6px;border:1px solid rgba(0,255,255,0.08);background:rgba(0,0,0,0.35);color:#fff}
-.input-row button{padding:10px 14px;background:var(--accent);border:none;color:#002629;border-radius:6px;font-weight:700;cursor:pointer}
-.message.user{color:#9fffe8}
-.message.jarvis{color:#cdefff}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:#000;overflow:hidden}
+.background{position:fixed;inset:0;background-image:url('img/interface.png');background-size:cover;background-position:center;filter:brightness(0.45);z-index:-2}
+.background::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.75));}
+.app-shell{position:relative;height:100%;display:flex;flex-direction:column;gap:16px;padding:20px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:rgba(0,0,0,0.35);border:1px solid rgba(0,255,255,0.12);border-radius:16px;backdrop-filter:blur(18px);box-shadow:0 0 40px rgba(0,230,255,0.08)}
+.brand{font-size:1.2rem;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#b2f4ff}
+.topbar-items{display:flex;align-items:center;gap:12px;font-size:0.95rem;color:var(--text-muted)}
+.status-dot{width:10px;height:10px;border-radius:50%;display:inline-block;box-shadow:0 0 12px rgba(0,230,255,0.35)}
+.status-dot.online{background:#30ffcd}
+.divider{width:1px;height:16px;background:rgba(0,255,255,0.2)}
+.app-grid{display:grid;grid-template-columns:280px 1.5fr 260px;gap:18px;flex:1;overflow:hidden}
+.panel{background:rgba(4,18,30,0.75);border:1px solid var(--border);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,0.25);backdrop-filter:blur(24px);display:flex;flex-direction:column;gap:18px;padding:22px;overflow:hidden}
+.side-panel{min-height:0}
+.panel-title{font-size:0.8rem;text-transform:uppercase;color:var(--accent);letter-spacing:0.28em;margin-bottom:10px}
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.status-grid div{background:rgba(255,255,255,0.04);border:1px solid rgba(0,255,255,0.1);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.status-grid span{font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.14em}
+.status-grid strong{font-size:1.3rem;color:#f5ffff}
+.memory-summary{display:flex;flex-direction:column;gap:10px;font-size:0.92rem;color:var(--text-muted);line-height:1.6}
+.memory-summary p{margin:0;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(0,255,255,0.1);border-radius:14px}
+.action-buttons, .quick-actions{display:grid;grid-template-columns:1fr;gap:10px}
+.action-buttons button, .quick-actions button{padding:14px 16px;border:none;border-radius:14px;background:rgba(0,255,255,0.1);color:#d9ffff;font-weight:700;cursor:pointer;transition:transform .18s ease, background .18s ease}
+.action-buttons button:hover, .quick-actions button:hover{transform:translateY(-1px);background:rgba(0,255,255,0.18)}
+.main-panel{display:flex;flex-direction:column;gap:18px;overflow:hidden}
+.main-header{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.section-label{font-size:0.75rem;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.24em}
+.main-header h1{margin:0;font-size:2rem;line-height:1;letter-spacing:0.02em}
+.signal-meter{display:flex;flex-direction:column;gap:8px;text-align:right}
+.meter-label{font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.18em}
+.meter-bar{width:180px;height:10px;border-radius:999px;background:rgba(255,255,255,0.08);overflow:hidden}
+.meter-bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#00e6ff,#00a5ff)}
+.hologram-panel{position:relative;min-height:320px;border:1px solid rgba(0,255,255,0.1);border-radius:24px;background:rgba(0,0,0,0.22);overflow:hidden}
+.holo-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px),linear-gradient(90deg,rgba(0,255,255,0.1) 1px,transparent 1px);background-size:80px 80px;opacity:0.18}
+.holo-circle{position:absolute;left:50%;top:50%;width:320px;height:320px;transform:translate(-50%, -50%);border-radius:50%;box-shadow:0 0 80px rgba(0,230,255,0.35);background:radial-gradient(circle at center, rgba(0,230,255,0.15), transparent 45%);}
+.holo-circle::before{content:'';position:absolute;inset:24px;border-radius:50%;border:1px solid rgba(0,255,255,0.45);}
+.holo-circle::after{content:'';position:absolute;inset:90px;border-radius:50%;border:1px dashed rgba(0,255,255,0.35);}
+.holo-text{position:absolute;left:50%;top:52%;transform:translate(-50%, -50%);font-size:5rem;font-weight:800;color:rgba(255,255,255,0.88);letter-spacing:0.3em;text-transform:uppercase;mix-blend-mode:screen;opacity:0.9}
+.console-panel{display:flex;flex-direction:column;gap:14px;min-height:280px}
+.console-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:4px;border-bottom:1px solid rgba(0,255,255,0.12);font-size:0.9rem;color:var(--text-muted)}
+.console-status{padding:6px 12px;border-radius:999px;background:rgba(0,255,255,0.08);color:#c7ffff}
+.console-messages{flex:1;overflow:auto;padding:14px;background:rgba(0,0,0,0.15);border:1px solid rgba(0,255,255,0.08);border-radius:18px;display:flex;flex-direction:column;gap:10px}
+.console-messages .message{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(0,255,255,0.08);font-size:0.93rem;line-height:1.5}
+.console-messages .message.user{background:rgba(0,255,255,0.1);border-color:rgba(0,255,255,0.18);color:#d8ffff}
+.console-messages .message.jarvis{background:rgba(0,0,0,0.24);border-color:rgba(0,255,255,0.08);}
+.input-row{display:flex;gap:12px}
+.input-row input{flex:1;padding:16px 18px;border-radius:16px;border:1px solid rgba(0,255,255,0.12);background:rgba(0,0,0,0.25);color:#e8fbff;outline:none}
+.input-row input::placeholder{color:rgba(255,255,255,0.45)}
+.input-row button{min-width:120px;padding:16px 18px;border:none;border-radius:16px;background:linear-gradient(135deg,#00f2ff,#00a5ff);color:#002629;font-weight:700;cursor:pointer;box-shadow:0 12px 30px rgba(0,230,255,0.22)}
+.device-list{display:flex;flex-direction:column;gap:10px}
+.device-item{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,0.03);border:1px solid rgba(0,255,255,0.08);cursor:pointer;transition:background .2s ease}
+.device-item.active, .device-item:hover{background:rgba(0,255,255,0.12)}
+.log-preview{display:flex;flex-direction:column;gap:10px;color:var(--text-muted);font-size:0.92rem}
+.log-preview p{margin:0;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(0,255,255,0.08)}
+@media(max-width:1280px){.app-grid{grid-template-columns:1fr;}}
+@media(max-width:860px){.topbar{flex-direction:column;align-items:flex-start}.app-shell{padding:14px}}

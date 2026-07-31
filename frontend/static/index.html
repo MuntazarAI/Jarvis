@@ -8,23 +8,94 @@
 </head>
 <body>
   <div class="background"></div>
-  <div class="app">
-    <div class="left-panel">
-      <div class="logo">J.A.R.V.I.S</div>
-      <div id="system-status" class="panel">System status...</div>
-      <div id="memory-panel" class="panel">Memory preview...</div>
-    </div>
-    <div class="main-panel">
-      <div id="console" class="console">
-        <div id="messages" class="messages"></div>
-        <div class="input-row">
-          <input id="input" placeholder="Type your command..." />
-          <button id="send">Send</button>
-        </div>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">J.A.R.V.I.S</div>
+      <div class="topbar-items">
+        <span class="status-dot online"></span>
+        <span>Operational</span>
+        <span class="divider"></span>
+        <span>Model: qwen2.5-coder</span>
+        <span class="divider"></span>
+        <span>Port: 8080</span>
       </div>
-    </div>
-    <div class="right-panel">
-      <div class="panel">Quick access</div>
+    </header>
+
+    <div class="app-grid">
+      <aside class="panel side-panel left-panel">
+        <div class="panel-title">SYSTEM</div>
+        <div class="status-grid">
+          <div><span>CPU</span><strong>21%</strong></div>
+          <div><span>MEM</span><strong>42%</strong></div>
+          <div><span>GPU</span><strong>12%</strong></div>
+          <div><span>NET</span><strong>98 Mbps</strong></div>
+        </div>
+        <div class="panel-title">MEMORY SNAPSHOT</div>
+        <div class="memory-summary">
+          <p>Last input: "Hello"</p>
+          <p>Recent goal: Build a real JARVIS AI</p>
+          <p>Memory count: 37</p>
+        </div>
+        <div class="panel-title">ACTIONS</div>
+        <div class="action-buttons">
+          <button>Analyze</button>
+          <button>Memory</button>
+          <button>Plan</button>
+        </div>
+      </aside>
+
+      <main class="panel main-panel">
+        <div class="main-header">
+          <div>
+            <div class="section-label">COMMAND CORE</div>
+            <h1>JARVIS CENTRAL</h1>
+          </div>
+          <div class="signal-meter">
+            <span class="meter-label">Signal</span>
+            <div class="meter-bar"><span style="width: 77%"></span></div>
+          </div>
+        </div>
+
+        <section class="hologram-panel">
+          <div class="holo-circle"></div>
+          <div class="holo-grid"></div>
+          <div class="holo-text">READY</div>
+        </section>
+
+        <section class="console-panel">
+          <div class="console-header">
+            <span>Command Console</span>
+            <span class="console-status">Online</span>
+          </div>
+          <div id="messages" class="console-messages"></div>
+          <div class="input-row">
+            <input id="input" placeholder="Type your command..." autocomplete="off" />
+            <button id="send">Send</button>
+          </div>
+        </section>
+      </main>
+
+      <aside class="panel side-panel right-panel">
+        <div class="panel-title">DEVICES</div>
+        <div class="device-list">
+          <div class="device-item active">Terminal</div>
+          <div class="device-item">Memory DB</div>
+          <div class="device-item">Knowledge Graph</div>
+          <div class="device-item">Browser</div>
+        </div>
+        <div class="panel-title">RECENT LOG</div>
+        <div class="log-preview">
+          <p>Jarvis boot sequence complete.</p>
+          <p>Agent memory loaded.</p>
+          <p>Model ready for commands.</p>
+        </div>
+        <div class="panel-title">QUICK COMMANDS</div>
+        <div class="quick-actions">
+          <button>Run Task</button>
+          <button>Open Shell</button>
+          <button>Summarize</button>
+        </div>
+      </aside>
     </div>
   </div>
 
