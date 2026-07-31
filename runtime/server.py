@@ -35,6 +35,11 @@ def api_ask():
 def static_files(filename):
     return send_from_directory(app.static_folder, filename)
 
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', config.get('http_port', 8080) if isinstance(config, dict) else 8080))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    debug = os.environ.get('FLASK_DEBUG', 'false').lower() in ('1', 'true', 'yes')
+    app.run(host='0.0.0.0', port=port, debug=debug, use_reloader=debug)
