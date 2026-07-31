@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jarvis UI</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="background"></div>
+  <div class="app">
+    <div class="left-panel">
+      <div class="logo">J.A.R.V.I.S</div>
+      <div id="system-status" class="panel">System status...</div>
+      <div id="memory-panel" class="panel">Memory preview...</div>
+    </div>
+    <div class="main-panel">
+      <div id="console" class="console">
+        <div id="messages" class="messages"></div>
+        <div class="input-row">
+          <input id="input" placeholder="Type your command..." />
+          <button id="send">Send</button>
+        </div>
+      </div>
+    </div>
+    <div class="right-panel">
+      <div class="panel">Quick access</div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

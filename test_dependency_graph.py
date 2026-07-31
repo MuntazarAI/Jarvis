@@ -1,29 +1,30 @@
 from analysis.dependency_graph import dependency_graph
 
-graph = dependency_graph.build(".")
+if __name__ == "__main__":
+    graph = dependency_graph.build(".")
 
-print("=" * 80)
-print("DEPENDENCY GRAPH SUMMARY")
-print("=" * 80)
+    print("=" * 80)
+    print("DEPENDENCY GRAPH SUMMARY")
+    print("=" * 80)
 
-print(f"\nTotal files: {len(graph)}")
+    print(f"\nTotal files: {len(graph)}")
 
-print("\nFirst 10 files:\n")
+    print("\nFirst 10 files:\n")
 
-for filename in sorted(graph)[:10]:
+    for filename in sorted(graph)[:10]:
 
-    info = graph[filename]
+        info = graph[filename]
 
-    print(f"{filename}")
+        print(f"{filename}")
 
-    print(f"  Imports   : {len(info['imports'])}")
+        print(f"  Imports   : {len(info['imports'])}")
 
-    print(f"  Classes   : {len(info['classes'])}")
+        print(f"  Classes   : {len(info['classes'])}")
 
-    print(f"  Functions : {len(info['functions'])}")
+        print(f"  Functions : {len(info['functions'])}")
 
-    print(f"  Used by   : {len(info['used_by'])}")
+        print(f"  Used by   : {len(info['used_by'])}")
 
-    print()
+        print()
 
-print("=" * 80)
+    print("=" * 80)

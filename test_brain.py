@@ -4,29 +4,30 @@ from execution.executor import Executor
 from tools.registry import ToolRegistry
 from tools.memory_tool import MemoryTool
 
-registry = ToolRegistry()
-registry.register(MemoryTool())
+if __name__ == "__main__":
+    registry = ToolRegistry()
+    registry.register(MemoryTool())
 
-planner = Planner()
-executor = Executor(registry)
+    planner = Planner()
+    executor = Executor(registry)
 
 
-fake_llm = """
-{
-    "tool":"memory",
-    "arguments":{
-        "action":"search",
-        "keyword":"Rust"
+    fake_llm = """
+    {
+        "tool":"memory",
+        "arguments":{
+            "action":"search",
+            "keyword":"Rust"
+        }
     }
-}
-"""
+    """
 
-plan = planner.plan(fake_llm)
+    plan = planner.plan(fake_llm)
 
-print("PLAN")
-print(plan)
+    print("PLAN")
+    print(plan)
 
-print()
+    print()
 
-print("RESULT")
-print(executor.execute(plan))
+    print("RESULT")
+    print(executor.execute(plan))

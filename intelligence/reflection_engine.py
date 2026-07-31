@@ -5,13 +5,12 @@ class ReflectionEngine:
     """
 
     def reflect(self, context):
-
-        validation = context.validation
+        validation = getattr(context, "validation", {}) or {}
 
         retry = False
         reason = "Task completed."
 
-        if context.error:
+        if getattr(context, "error", None):
             retry = True
             reason = context.error
 
@@ -27,23 +26,55 @@ class ReflectionEngine:
             retry = True
             reason = "Tests failed."
 
+        iteration = getattr(context, "iteration", None)
+        if iteration is None:
+            iteration = len(getattr(context, "history", [])) + 1
+
+        errors = 0
+        if hasattr(context, "errors"):
+            errors = len(getattr(context, "errors", []))
+
         reflection = {
             "retry": retry,
             "reason": reason,
-            "iteration": context.memory.iteration,
-            "history": len(context.memory.history),
-            "errors": len(context.memory.errors),
-            "patches": len(context.memory.patches),
+            "iteration": iteration,
+            "history": len(getattr(context, "history", [])),
+            "errors": errors,
+            "patches": len(getattr(context, "patches", [])),
         }
 
         context.analysis["reflection"] = reflection
 
-        context.memory.remember(
-            "reflection",
-            reflection,
-        )
+        if hasattr(context, "memory"):
+            try:
+                context.memory.remember("reflection", reflection)
+            except Exception:
+                pass
 
         return context
+
+    def reply(self, request, result):
+        if isinstance(result, dict):
+            if result.get("success") is False:
+                message = result.get("error") or result.get("stderr") or str(result)
+                return f"Execution failed: {message}"
+
+            if "stdout" in result and result["stdout"] is not None:
+                return str(result["stdout"]).strip() or "Execution completed successfully."
+
+            if "result" in result:
+                return str(result["result"])
+
+            if result.get("tool") and "result" in result:
+                return str(result["result"])
+
+            return "Execution completed successfully."
+
+        if isinstance(result, list):
+            return "\n".join(str(item) for item in result)
+
+        return str(result)
+
 
 reflection_engine = ReflectionEngine()
 

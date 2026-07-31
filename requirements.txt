@@ -28,6 +28,8 @@ multidict==6.7.1
 narwhals==2.24.0
 numpy==2.5.1
 openai==2.45.0
+ollama==0.6.2
+duckduckgo_search==8.1.1
 packaging==26.2
 pandas==3.0.3
 pillow==12.3.0
@@ -56,6 +58,7 @@ tabulate==0.10.0
 threadpoolctl==3.6.0
 tqdm==4.68.4
 typing-inspection==0.4.2
+pytest==9.1.1
 typing_extensions==4.16.0
 urllib3==2.7.0
 yarl==1.24.2

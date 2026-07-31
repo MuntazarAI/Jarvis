@@ -3,16 +3,17 @@ import tools.code_reader
 
 from tools.registry import registry
 
-tool = registry.get("code_reader")
+if __name__ == "__main__":
+    tool = registry.get("code_reader")
 
-print(tool.execute({
-    "path": "brain/brain.py"
-}))
+    print(tool.execute({
+        "path": "brain/brain.py"
+    }))
 
-print()
+    print()
 
-print(tool.execute({
-    "path": "brain/brain.py",
-    "start": 1,
-    "end": 15
-}))
+    print(tool.execute({
+        "path": "brain/brain.py",
+        "start": 1,
+        "end": 15
+    }))

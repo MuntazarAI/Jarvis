@@ -2,34 +2,35 @@ from pprint import pprint
 
 from brain.refactoring_engine import refactoring_engine
 
-result = refactoring_engine.refactor(
-    "Fix every NameError in the project."
-)
+if __name__ == "__main__":
+    result = refactoring_engine.refactor(
+        "Fix every NameError in the project."
+    )
 
-print()
+    print()
 
-print("=" * 80)
-print("PLAN")
-print("=" * 80)
+    print("=" * 80)
+    print("PLAN")
+    print("=" * 80)
 
-pprint(result["plan"])
+    pprint(result["plan"])
 
-print()
+    print()
 
-print("=" * 80)
-print("FILES ANALYZED")
-print("=" * 80)
+    print("=" * 80)
+    print("FILES ANALYZED")
+    print("=" * 80)
 
-print(len(result["results"]))
+    print(len(result["results"]))
 
-print()
+    print()
 
-for item in result["results"][:3]:
+    for item in result["results"][:3]:
 
-    print("-" * 60)
+        print("-" * 60)
 
-    print(item["file"])
+        print(item["file"])
 
-    pprint(item["debug"])
+        pprint(item["debug"])
 
-    pprint(item["patch"])
+        pprint(item["patch"])

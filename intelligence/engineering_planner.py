@@ -1,7 +1,5 @@
 import json
-import ollama
-
-from core.config import MODEL
+from core.llm import ask_llm
 
 
 SYSTEM_PROMPT = """
@@ -69,21 +67,18 @@ Return ONLY JSON.
 
         prompt = self._build_prompt(request)
 
-        response = ollama.chat(
-            model=MODEL,
-            messages=[
-                {
-                    "role": "system",
-                    "content": SYSTEM_PROMPT
-                },
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ]
-        )
+        response_text = ask_llm([
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ])
 
-        text = response["message"]["content"].strip()
+        text = response_text.strip()
 
         if text.startswith("```json"):
             text = text[7:]

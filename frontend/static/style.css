@@ -1,0 +1,21 @@
+:root{
+  --bg:#04121a;
+  --panel: rgba(0,20,30,0.6);
+  --accent: #00e6ff;
+  --glass: rgba(255,255,255,0.03);
+}
+html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial;background:#000}
+.background{position:fixed;inset:0;background-image: url('img/interface.png');background-size:cover;background-position:center;filter:brightness(0.55);}
+.app{position:relative;display:flex;gap:18px;padding:28px;height:100%;box-sizing:border-box}
+.left-panel{width:260px;color:var(--accent);display:flex;flex-direction:column;gap:12px}
+.right-panel{width:300px;color:var(--accent)}
+.main-panel{flex:1;display:flex;align-items:center;justify-content:center}
+.panel{background:var(--panel);border:1px solid rgba(0,255,255,0.06);padding:12px;border-radius:8px}
+.logo{font-weight:700;font-size:18px;margin-bottom:8px}
+.console{width:100%;max-width:900px;height:70vh;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.5));backdrop-filter:blur(6px);border-radius:10px;padding:16px;display:flex;flex-direction:column}
+.messages{flex:1;overflow:auto;color:#cdefff;padding:8px}
+.input-row{display:flex;gap:8px;margin-top:8px}
+.input-row input{flex:1;padding:10px;border-radius:6px;border:1px solid rgba(0,255,255,0.08);background:rgba(0,0,0,0.35);color:#fff}
+.input-row button{padding:10px 14px;background:var(--accent);border:none;color:#002629;border-radius:6px;font-weight:700;cursor:pointer}
+.message.user{color:#9fffe8}
+.message.jarvis{color:#cdefff}

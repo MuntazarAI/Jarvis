@@ -1,5 +1,6 @@
 from analysis.project_memory import project_memory
 
-result = project_memory.build_index()
+if __name__ == "__main__":
+    result = project_memory.build_index()
 
-print(result)
+    print(result)

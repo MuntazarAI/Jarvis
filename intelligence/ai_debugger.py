@@ -1,9 +1,7 @@
 import json
 import re
 
-import ollama
-
-from core.config import MODEL
+from core.llm import ask_llm
 
 
 class AIDebugger:
@@ -36,27 +34,24 @@ class AIDebugger:
 
             try:
 
-                response = ollama.chat(
-                    model=MODEL,
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": (
-                                "You are an expert Python debugging engine.\n"
-                                "Return ONLY JSON.\n"
-                                "Never explain.\n"
-                                "Never use markdown.\n"
-                                "Never output code fences."
-                            )
-                        },
-                        {
-                            "role": "user",
-                            "content": prompt
-                        }
-                    ]
-                )
+                response_text = ask_llm([
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are an expert Python debugging engine.\n"
+                            "Return ONLY JSON.\n"
+                            "Never explain.\n"
+                            "Never use markdown.\n"
+                            "Never output code fences."
+                        )
+                    },
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ])
 
-                text = response["message"]["content"].strip()
+                text = response_text.strip()
 
                 result = self._parse_json(text)
 

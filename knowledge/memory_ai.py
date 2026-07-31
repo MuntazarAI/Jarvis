@@ -1,6 +1,5 @@
 import json
-from ollama import chat
-from core.config import MODEL
+from core.llm import ask_llm
 
 SYSTEM_PROMPT = """
 You extract long-term facts about the user.
@@ -52,19 +51,16 @@ Only return JSON.
 
 
 def extract_memory(prompt: str) -> dict:
-    response = chat(
-        model=MODEL,
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT,
-            },
-            {
-                "role": "user",
-                "content": prompt,
-            },
-        ],
-    )
+    response = ask_llm([
+        {
+            "role": "system",
+            "content": SYSTEM_PROMPT,
+        },
+        {
+            "role": "user",
+            "content": prompt,
+        },
+    ])
 
     text = response["message"]["content"].strip()
 
