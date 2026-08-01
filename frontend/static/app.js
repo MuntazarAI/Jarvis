@@ -1,6 +1,8 @@
 const messagesEl = document.getElementById('messages');
 const inputEl = document.getElementById('input');
 const sendBtn = document.getElementById('send');
+const clearBtn = document.getElementById('clear');
+const quickButtons = document.querySelectorAll('[data-command]');
 
 function createMessage(text, cls='jarvis'){
   const div = document.createElement('div');
@@ -15,12 +17,26 @@ function addMessage(text, cls='jarvis'){
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
-async function sendMessage(){
-  const text = inputEl.value.trim();
-  if(!text) return;
-  addMessage(`> ${text}`, 'user');
-  inputEl.value = '';
+function setLoading(isLoading){
+  if(isLoading){
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending...';
+  } else {
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Send';
+  }
+}
 
+async function sendMessage(command){
+  const text = (command || inputEl.value).trim();
+  if(!text) return;
+
+  addMessage(`> ${text}`, 'user');
+  if(!command){
+    inputEl.value = '';
+  }
+
+  setLoading(true);
   try{
     const res = await fetch('/api/ask', {
       method: 'POST',
@@ -37,10 +53,26 @@ async function sendMessage(){
     }
   } catch(err){
     addMessage(`Network error: ${err.message}`);
+  } finally {
+    setLoading(false);
   }
 }
 
-sendBtn.addEventListener('click', sendMessage);
-inputEl.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') sendMessage(); });
+function clearConsole(){
+  messagesEl.innerHTML = '';
+  addMessage('Console cleared. Ready for new input.');
+}
 
-addMessage('Jarvis online. Type a command to begin.');
+sendBtn.addEventListener('click', () => sendMessage());
+inputEl.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') sendMessage(); });
+clearBtn?.addEventListener('click', clearConsole);
+quickButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const command = btn.getAttribute('data-command');
+    if(command){
+      sendMessage(command);
+    }
+  });
+});
+
+addMessage('Jarvis online. Use the quick actions or type a command.');
