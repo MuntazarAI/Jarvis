@@ -3,117 +3,201 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Jarvis UI</title>
+  <title>JARVIS Ultimate</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
   <div class="background"></div>
-  <div class="app-shell">
-    <header class="topbar">
-      <div class="brand">J.A.R.V.I.S</div>
-      <div class="topbar-items">
-        <span class="status-dot online"></span>
-        <span>Online</span>
-        <span class="divider"></span>
-        <span>Core: qwen2.5-coder</span>
-        <span class="divider"></span>
-        <span>HTTP: 8080</span>
+  <div class="overlay"></div>
+  <div class="layout">
+    <header class="hero-bar">
+      <div class="hero-left">
+        <span class="hero-tag">UPTIME 3D 14H 22M 37S</span>
+      </div>
+      <div class="hero-center">
+        <div class="hero-title">J.A.R.V.I.S. ULTIMATE</div>
+        <div class="hero-subtitle">AI Operating System</div>
+      </div>
+      <div class="hero-right">
+        <span class="mini-text">22:16</span>
+        <span class="mini-text">⚡</span>
+        <span class="mini-text">☁</span>
+        <span class="mini-text">◎</span>
       </div>
     </header>
 
-    <div class="app-grid">
-      <aside class="panel left-panel">
-        <div class="panel-heading">SYSTEM DIAGNOSTICS</div>
-        <div class="metric-grid">
-          <div class="metric-card"><span>CPU</span><strong>18%</strong></div>
-          <div class="metric-card"><span>MEM</span><strong>45%</strong></div>
-          <div class="metric-card"><span>NET</span><strong>124 Mbps</strong></div>
-          <div class="metric-card"><span>GPU</span><strong>11%</strong></div>
-        </div>
-        <div class="panel-heading">STATUS SNAPSHOT</div>
-        <div class="status-stack">
-          <div class="status-item"><strong>Tasks:</strong> 4 queued</div>
-          <div class="status-item"><strong>Memory:</strong> 42 entries</div>
-          <div class="status-item"><strong>Goals:</strong> 7 active</div>
-        </div>
-        <div class="panel-heading">COMMANDS</div>
-        <div class="control-buttons">
-          <button data-command="analyze system">Analyze</button>
-          <button data-command="recall memory status">Memory</button>
-          <button data-command="create execution plan">Plan</button>
-        </div>
+    <div class="content-grid">
+      <aside class="nav-panel">
+        <div class="nav-icon active">⦿</div>
+        <div class="nav-icon">⌂</div>
+        <div class="nav-icon">⦿</div>
+        <div class="nav-icon">◉</div>
+        <div class="nav-icon">⌘</div>
+        <div class="nav-icon">☰</div>
+        <div class="nav-icon">⚙</div>
       </aside>
 
-      <main class="panel main-panel">
-        <div class="main-header">
-          <div>
-            <div class="section-label">CORE VISUALIZER</div>
-            <h1>JARVIS NEURAL HUB</h1>
-          </div>
-          <div class="health-box">
-            <span>Integrity</span>
-            <strong>99.7%</strong>
-          </div>
+      <main class="main-column">
+        <div class="top-row">
+          <section class="panel console-panel">
+            <div class="panel-header">
+              <span>JARVIS AI CONSOLE</span>
+              <span class="panel-indicator">ONLINE</span>
+            </div>
+            <div class="console-body">
+              <div class="console-text">
+                <p>JARVIS:</p>
+                <p>All systems online.</p>
+                <p>How may I assist you today, sir?</p>
+              </div>
+              <div class="console-waveform"></div>
+            </div>
+            <div class="console-input-row">
+              <input id="input" placeholder="Type your command..." autocomplete="off" />
+              <button id="send">▶</button>
+            </div>
+          </section>
+
+          <section class="panel stats-panel">
+            <div class="stat-card"><span>CPU</span><strong>12%</strong><small>usage</small></div>
+            <div class="stat-card"><span>RAM</span><strong>34%</strong><small>usage</small></div>
+            <div class="stat-card"><span>GPU</span><strong>18%</strong><small>usage</small></div>
+            <div class="stat-card"><span>TEMP</span><strong>48°C</strong><small>core</small></div>
+            <div class="stat-card"><span>BATTERY</span><strong>82%</strong><small>charging</small></div>
+            <div class="stat-card"><span>NETWORK</span><strong>+12.4 MB/s</strong><small>+8.7 MB/s</small></div>
+          </section>
         </div>
 
-        <section class="hologram-panel">
-          <div class="holo-layer holo-ring"></div>
-          <div class="holo-layer holo-grid"></div>
-          <div class="holo-layer holo-core"></div>
-          <div class="holo-label">ACTIVE</div>
+        <section class="panel core-panel">
+          <div class="core-header">
+            <div class="core-label">AI CORE - GARGANTUA</div>
+            <div class="core-metrics">
+              <div><span>MASS</span><strong>1.98 × 10^40 kg</strong></div>
+              <div><span>SPIN</span><strong>0.89 a</strong></div>
+              <div><span>TEMP</span><strong>1.42 × 10^10 K</strong></div>
+              <div><span>RADIATION</span><strong>7.31 × 10^27 W</strong></div>
+              <div><span>GRAVITY</span><strong>∞</strong></div>
+            </div>
+          </div>
+          <div class="blackhole"></div>
         </section>
 
-        <section class="console-panel">
-          <div class="console-header">
-            <div>
-              <span>COMMAND CONSOLE</span>
-              <p>Live terminal interaction with Jarvis</p>
+        <div class="bottom-row">
+          <section class="panel graph-panel">
+            <div class="panel-header"><span>MEMORY GRAPH</span></div>
+            <div class="graph-canvas"></div>
+          </section>
+
+          <section class="panel process-panel">
+            <div class="panel-header"><span>AI THINKING PROCESS</span></div>
+            <div class="process-flow">
+              <span>INPUT</span><span>UNDERSTAND</span><span>SEARCH MEMORY</span><span>REASON</span><span>PLAN</span><span>EXECUTE</span><span>RESPONSE</span>
             </div>
-            <button id="clear">Clear</button>
-          </div>
-          <div id="messages" class="console-messages"></div>
-          <div class="input-row">
-            <input id="input" placeholder="Enter a command, e.g. 'run diagnostics'" autocomplete="off" />
-            <button id="send">Send</button>
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
 
-      <aside class="panel right-panel">
-        <div class="panel-heading">MEMORY ENGINE</div>
-        <div class="memory-summary">
-          <div><span>Last recall</span><strong>4m ago</strong></div>
-          <div><span>Recent note</span><strong>Build AI monitor</strong></div>
-          <div><span>Profile</span><strong>Muntazar</strong></div>
-        </div>
-        <div class="panel-heading">RECENT LOGS</div>
-        <div class="log-preview">
-          <p>2026-08-01 12:25 — UI server rebooted.</p>
-          <p>2026-08-01 12:24 — Jarvis is ready.</p>
-          <p>2026-08-01 12:20 — Model loaded successfully.</p>
-        </div>
-        <div class="panel-heading">QUICK ACTIONS</div>
-        <div class="quick-actions">
-          <button data-command="show system status">Status</button>
-          <button data-command="open task runner">Run Task</button>
-          <button data-command="summarize current plan">Summarize</button>
-        </div>
+      <aside class="sidebar-panel">
+        <section class="panel quick-panel">
+          <div class="panel-header"><span>QUICK ACCESS</span></div>
+          <div class="quick-grid">
+            <button>DESKTOP</button>
+            <button>ANDROID</button>
+            <button>BROWSER</button>
+            <button>TERMINAL</button>
+            <button>PLUGINS</button>
+            <button>SETTINGS</button>
+          </div>
+        </section>
+
+        <section class="panel preview-panel">
+          <div class="panel-header"><span>DESKTOP PREVIEW</span><span class="live-dot"></span></div>
+          <div class="preview-frame"></div>
+        </section>
+
+        <section class="panel preview-panel">
+          <div class="panel-header"><span>ANDROID DEVICE</span><span class="live-dot"></span></div>
+          <div class="android-frame"></div>
+        </section>
+
+        <section class="panel planner-panel">
+          <div class="panel-header"><span>PLANNER</span></div>
+          <div class="planner-body">
+            <div class="planner-title">ACTIVE PLAN: Research Project</div>
+            <ul>
+              <li>1. Research ✓</li>
+              <li>2. Analyze</li>
+              <li>3. Plan</li>
+              <li>4. Execute</li>
+              <li>5. Verify</li>
+              <li>6. Report</li>
+            </ul>
+            <div class="planner-progress">
+              <span>62%</span>
+              <small>ETA 00:14:32</small>
+            </div>
+          </div>
+        </section>
       </aside>
     </div>
 
-    <footer class="footer-panel">
-      <div class="footer-item">
-        <span>Connected</span>
-        <strong>127.0.0.1</strong>
-      </div>
-      <div class="footer-item">
-        <span>Model</span>
-        <strong>qwen2.5-coder</strong>
-      </div>
-      <div class="footer-item">
-        <span>Mode</span>
-        <strong>Local</strong>
-      </div>
+    <footer class="footer-grid">
+      <section class="panel neural-panel">
+        <div class="panel-header"><span>NEURAL ACTIVITY</span></div>
+        <div class="neural-stats">
+          <div><span>THINKING</span><strong>68%</strong></div>
+          <div><span>MEMORY</span><strong>72%</strong></div>
+          <div><span>REASONING</span><strong>64%</strong></div>
+          <div><span>VISION</span><strong>61%</strong></div>
+          <div><span>PLANNING</span><strong>57%</strong></div>
+          <div><span>LANGUAGE</span><strong>73%</strong></div>
+        </div>
+      </section>
+      <section class="panel voice-panel">
+        <div class="panel-header"><span>VOICE ANALYSIS</span></div>
+        <div class="mic-card"><div class="mic-icon">🎙</div><div class="mic-status">LISTENING...</div></div>
+      </section>
+      <section class="panel vision-panel">
+        <div class="panel-header"><span>VISION INSPECTOR</span><span class="live-dot"></span></div>
+        <div class="vision-preview"></div>
+      </section>
+      <section class="panel tools-panel">
+        <div class="panel-header"><span>TOOLS & AUTOMATION</span></div>
+        <ul class="tool-list">
+          <li>SCREENSHOT</li>
+          <li>CLICK</li>
+          <li>TYPE TEXT</li>
+          <li>RUN COMMAND</li>
+          <li>OPEN APP</li>
+          <li>FIND ELEMENT</li>
+        </ul>
+      </section>
+      <section class="panel network-panel">
+        <div class="panel-header"><span>NETWORK MONITOR</span></div>
+        <div class="network-map"></div>
+      </section>
+      <section class="panel plugin-panel">
+        <div class="panel-header"><span>PLUGIN MANAGER</span></div>
+        <ul class="plugin-list">
+          <li>Weather Plugin <span>Active</span></li>
+          <li>Calendar Plugin <span>Active</span></li>
+          <li>News Plugin <span>Active</span></li>
+          <li>YouTube Plugin <span>Active</span></li>
+          <li>Reminder Plugin <span>Active</span></li>
+        </ul>
+      </section>
+      <section class="panel terminal-panel">
+        <div class="panel-header"><span>TERMINAL</span></div>
+        <pre class="terminal-log">zsh ~
+jarvis@core:~$ system status
+System: JARVIS Ultimate v6.0
+Kernel: AIOS 6.0-ULTRIMATE
+Node: 12 active
+Memory: 34% / 64GB
+AI Core: Online
+Plugins: 24 Active
+jarvis@core:~$</pre>
+      </section>
     </footer>
   </div>
 
