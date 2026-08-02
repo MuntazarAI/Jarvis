@@ -4,27 +4,28 @@ from intelligence.reflection import reflection
 from brain.formatter import format_tool_result
 from brain.validator import validator
 
-brain = Brain()
+if __name__ == "__main__":
+    brain = Brain()
 
-while True:
+    while True:
 
-    text = input("\nYou: ")
+        text = input("\nYou: ")
 
-    if text.lower() == "exit":
-        break
+        if text.lower() == "exit":
+            break
 
-    plan = brain.think(text)
-    plan = validator.validate(plan)
-    
-    print("\nPLAN")
-    print(plan)
+        plan = brain.think(text)
+        plan = validator.validate(plan)
 
-    result = executor.execute(plan)
+        print("\nPLAN")
+        print(plan)
 
-    print("\nRESULT")
-    print(format_tool_result(result))
+        result = executor.execute(plan)
 
-    answer = reflection.reply(text, result)
+        print("\nRESULT")
+        print(format_tool_result(result))
 
-    print("\nJarvis:")
-    print(answer)
+        answer = reflection.reply(text, result)
+
+        print("\nJarvis:")
+        print(answer)

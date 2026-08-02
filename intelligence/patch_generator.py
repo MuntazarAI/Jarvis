@@ -1,7 +1,5 @@
 import json
-import ollama
-
-from core.config import MODEL
+from core.llm import ask_llm
 
 
 class PatchGenerator:
@@ -76,17 +74,14 @@ Rules:
 - Preserve formatting.
 """
 
-        response = ollama.chat(
-            model=MODEL,
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ]
-        )
+        response_text = ask_llm([
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ])
 
-        text = response["message"]["content"].strip()
+        text = response_text.strip()
 
         try:
             return json.loads(text)

@@ -6,7 +6,8 @@
         "age": 17,
         "location": "India",
         "occupation": "Student",
-        "favorite_language": "Rust"
+        "favorite_language": "Rust",
+        "favorite_editor": "VS Code"
     },
     "preferences": {
         "favorite_food": "Pizza",

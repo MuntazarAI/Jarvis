@@ -1,3 +1,5 @@
 def add(a:int, b: int) -> int:
     return a + b
-print(add(10, 20))
+
+if __name__ == "__main__":
+    print(add(10, 20))

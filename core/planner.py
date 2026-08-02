@@ -50,6 +50,13 @@ class Planner:
             "recall",
         }
 
+        self.help_words = {
+            "help",
+            "commands",
+            "usage",
+            "options",
+        }
+
         self.system_words = {
             "open",
             "close",
@@ -64,6 +71,17 @@ class Planner:
         text = prompt.lower().strip()
 
         words = set(re.findall(r"\w+", text))
+
+        # --------------------------
+        # HELP
+        # --------------------------
+
+        if words & self.help_words:
+            return Plan(
+                intent="help",
+                action="help",
+                target=text,
+            )
 
         # --------------------------
         # MEMORY

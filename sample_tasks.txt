@@ -1,0 +1,6 @@
+# Sample tasks for Jarvis automated mode.
+# Save this file and run: python jarvis.py --tasks sample_tasks.txt
+
+Hello Jarvis
+Search memory for Rust
+Run print('Hello from automated Jarvis') in a temporary Python script

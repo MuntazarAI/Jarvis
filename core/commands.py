@@ -6,6 +6,18 @@ Executes commands chosen by the planner.
 
 from core.tools import tool_manager
 
+HELP_TEXT = (
+    "Jarvis can help with the following commands:\n"
+    "- Type or say a question to get an AI response.\n"
+    "- Use 'help', 'commands', or 'usage' to see this message again.\n"
+    "- Use 'remember' to store important details.\n"
+    "- Use 'forget' to remove remembered details in future versions.\n"
+    "- Use words like 'search', 'google', or 'find' to search the web.\n"
+    "- Use words like 'open', 'launch', or 'start' to open applications.\n"
+    "- Type 'exit' or 'quit' to close Jarvis.\n"
+    "- Configuration is available in config/defaults.json.\n"
+)
+
 
 def execute(plan):
     """
@@ -17,7 +29,14 @@ def execute(plan):
     """
 
     # --------------------------
-    # Memory
+    # HELP
+    # --------------------------
+
+    if plan.intent == "help":
+        return HELP_TEXT
+
+    # --------------------------
+    # MEMORY
     # --------------------------
 
     if plan.intent == "memory":

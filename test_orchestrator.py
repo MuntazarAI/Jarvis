@@ -2,6 +2,7 @@ from pprint import pprint
 
 from execution.orchestrator import engineering_orchestrator
 
-result = engineering_orchestrator.prepare(".")
+if __name__ == "__main__":
+    result = engineering_orchestrator.prepare(".")
 
-pprint(result)
+    pprint(result)

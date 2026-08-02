@@ -1,6 +1,4 @@
-import ollama
-
-from core.config import MODEL
+from core.llm import ask_llm
 from runtime.read_code import read_code
 
 
@@ -44,21 +42,18 @@ Source Code:
 {source["content"]}
 """
 
-        response = ollama.chat(
-            model=MODEL,
-            messages=[
-                {
-                    "role": "system",
-                    "content": SYSTEM_PROMPT,
-                },
-                {
-                    "role": "user",
-                    "content": prompt,
-                },
-            ],
-        )
+        response_text = ask_llm([
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT,
+            },
+            {
+                "role": "user",
+                "content": prompt,
+            },
+        ])
 
-        patched = response["message"]["content"].strip()
+        patched = response_text.strip()
 
         if patched.startswith("```python"):
             patched = patched[9:]

@@ -1,22 +1,23 @@
 from tools.registry import ToolRegistry
 from tools.memory_tool import MemoryTool
 
-registry = ToolRegistry()
+if __name__ == "__main__":
+    registry = ToolRegistry()
 
-registry.register(MemoryTool())
+    registry.register(MemoryTool())
 
-print("Available tools:\n")
+    print("Available tools:\n")
 
-for tool in registry.schemas():
-    print(tool)
+    for tool in registry.schemas():
+        print(tool)
 
-print("\nSearching memory...\n")
+    print("\nSearching memory...\n")
 
-memory_tool = registry.get("memory")
+    memory_tool = registry.get("memory")
 
-print(
-    memory_tool.run(
-        action="search",
-        keyword="Rust"
+    print(
+        memory_tool.run(
+            action="search",
+            keyword="Rust"
+        )
     )
-)

@@ -1,8 +1,6 @@
-import ollama
-
 from brain.multiplanner import multiplanner
 from brain.system_prompt import SYSTEM_PROMPT
-from core.config import MODEL
+from core.llm import ask_llm
 
 
 class Brain:
@@ -13,21 +11,18 @@ class Brain:
 
     def think(self, user_message):
 
-        response = ollama.chat(
-            model=MODEL,
-            messages=[
-                {
-                    "role": "system",
-                    "content": SYSTEM_PROMPT
-                },
-                {
-                    "role": "user",
-                    "content": user_message
-                }
-            ]
-        )
+        response_text = ask_llm([
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT
+            },
+            {
+                "role": "user",
+                "content": user_message
+            }
+        ])
 
-        text = response["message"]["content"]
+        text = response_text.strip()
 
         return multiplanner.plan(text)
 

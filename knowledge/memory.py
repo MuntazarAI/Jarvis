@@ -207,3 +207,12 @@ class Memory:
 
 
 memory = Memory()
+
+
+def remember(new_memory):
+    return memory.remember(new_memory)
+
+
+def search(keyword):
+    return memory.search(keyword)
+
