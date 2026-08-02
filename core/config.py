@@ -13,7 +13,7 @@ DEFAULTS = {
     "assistant_name": "Jarvis",
     "log_level": "INFO",
     "data_dir": "data",
-    "model": "qwen2.5:3b",
+    "model": "qwen2.5-coder:3b",
     "max_workers": 4,
     "use_gpu": False,
     "http_port": 8080,
