@@ -1,8 +1,8 @@
-const messagesEl = document.getElementById('messages');
-const inputEl = document.getElementById('input');
-const sendBtn = document.getElementById('send');
-const clearBtn = document.getElementById('clear');
-const quickButtons = document.querySelectorAll('[data-command]');
+let messagesEl;
+let inputEl;
+let sendBtn;
+let clearBtn;
+let quickButtons;
 
 function createMessage(text, cls='jarvis'){
   const div = document.createElement('div');
@@ -63,16 +63,35 @@ function clearConsole(){
   addMessage('Console cleared. Ready for new input.');
 }
 
-sendBtn.addEventListener('click', () => sendMessage());
-inputEl.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') sendMessage(); });
-clearBtn?.addEventListener('click', clearConsole);
-quickButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const command = btn.getAttribute('data-command');
-    if(command){
-      sendMessage(command);
-    }
-  });
-});
+function initializeConsole(){
+  messagesEl = document.getElementById('messages');
+  inputEl = document.getElementById('input');
+  sendBtn = document.getElementById('send');
+  clearBtn = document.getElementById('clear');
+  quickButtons = document.querySelectorAll('[data-command]');
 
-addMessage('Jarvis online. Use the quick actions or type a command.');
+  if(!messagesEl || !inputEl || !sendBtn){
+    console.error('Jarvis UI failed to initialize. Missing required DOM elements.');
+    return;
+  }
+
+  sendBtn.addEventListener('click', () => sendMessage());
+  inputEl.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') sendMessage(); });
+  clearBtn?.addEventListener('click', clearConsole);
+  quickButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const command = btn.getAttribute('data-command');
+      if(command){
+        sendMessage(command);
+      }
+    });
+  });
+
+  addMessage('Jarvis online. Use the quick actions or type a command.');
+}
+
+if (document.readyState !== 'loading') {
+  initializeConsole();
+} else {
+  document.addEventListener('DOMContentLoaded', initializeConsole);
+}

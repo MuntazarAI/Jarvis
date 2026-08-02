@@ -20,6 +20,18 @@ Use a task list file with one command per line:
 python jarvis.py --tasks sample_tasks.txt
 ```
 
+## Running the web UI
+
+Start the bundled web UI server:
+
+```bash
+bash runtime/start_ui.sh
+```
+
+Then open the printed localhost URL in your browser. The startup script will attempt port 8080 first and fall back to 8081, 8082, or 8083 if that port is already in use.
+
+The backend uses the configured `MODEL` (default `qwen2.5:3b`) and requires the corresponding Ollama model or another supported provider to be available.
+
 ## Smart memory mode
 
 Jarvis retrieves relevant memories before each task by default. To disable that behavior:
