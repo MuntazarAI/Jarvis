@@ -1,41 +1,52 @@
+# Python
 __pycache__/
 *.py[cod]
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+*.egg-info/
 
+# Virtual environments
 .venv/
 venv/
 env/
 
+# Environment / secrets
 .env
 .env.*
 !.env.example
 
+# IDEs
 .vscode/
 .idea/
 
+# OS
 .DS_Store
 Thumbs.db
 
+# Logs
 *.log
 logs/
 
+# Databases / local state
 *.db
 *.sqlite
 *.sqlite3
 
+# Caches / temporary files
 .cache/
 tmp/
 temp/
 
+# Build artifacts
 build/
 dist/
-*.egg-info/
 
+# Coverage
 .coverage
 htmlcov/
 coverage.xml
 
+# Local runtime / generated data
 data/
 runtime/

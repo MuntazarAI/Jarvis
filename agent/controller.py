@@ -1,0 +1,149 @@
+from rich.jupyter import display
+
+from agent.state import AgentState
+
+from agent.reasoning import reasoning_engine
+from agent.planner import agent_planner
+from agent.tool_selector import tool_selector
+
+from runtime.router import runtime_router
+import pprint
+
+class AgentController:
+    """
+    Main autonomous engineering loop.
+    """
+
+    def __init__(self):
+
+        self.max_iterations = 100
+
+    def run(self, goal):
+
+        state = AgentState(goal=goal)
+
+        print()
+        print("=" * 80)
+        print("AUTONOMOUS ENGINEERING AGENT")
+        print("=" * 80)
+
+        while not state.finished:
+
+            state.next_step()
+
+            print()
+            print(f"[Iteration {state.current_step}]")
+
+            if state.current_step > self.max_iterations:
+
+                state.stop(False)
+                state.add_error("Maximum iterations reached.")
+                break
+
+            #
+            # Think
+            #
+
+            thought = reasoning_engine.reason(state)
+
+            state.add_thought(thought)
+
+            print("Thought :", thought)
+
+            #
+            # Plan
+            #
+
+            plan = agent_planner.plan(state)
+
+            if not plan:
+
+                state.stop(True)
+                break
+
+            #
+            # Execute
+            #
+
+            for action in plan:
+
+                action_name = action.get("action")
+                action_args = action.get("args", {})
+
+                print("Action :", action_name)
+
+                state.add_action(action)
+
+                result = runtime_router.execute(
+                    action_name,
+                    **action_args,
+                )
+
+                if hasattr(result, "to_dict"):
+                    result = result.to_dict()
+
+                state.add_observation(
+                    {
+                        "action": action_name,
+                        "result": result,
+                    }
+                )
+
+                if not result.get("success", False):
+
+                    state.add_error(
+                        result.get(
+                            "stderr",
+                            result.get(
+                                "error",
+                                "Unknown error",
+                            ),
+                        )
+                    )
+
+                decision = tool_selector.after_action(
+                    state,
+                    result,
+                )
+
+                print("Decision:", decision)
+                display = result.copy()
+
+                if isinstance(display.get("data"), dict):
+                    data = display["data"].copy()
+
+                    for key in ("content", "original", "patched"):
+                        if key in data:
+                            data[key] = f"<{len(data[key])} chars>"
+
+                    display["data"] = data
+
+                pprint.pprint(display)
+
+                if decision == "finish":
+
+                    state.stop(True)
+                    break
+
+                if decision == "retry":
+
+                    break
+
+                if decision == "abort":
+
+                    state.stop(False)
+                    break
+
+            if state.finished:
+
+                break
+
+        print()
+        print("=" * 80)
+        print("AGENT FINISHED")
+        print("=" * 80)
+
+        return state
+
+
+agent_controller = AgentController()
